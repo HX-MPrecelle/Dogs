@@ -24,6 +24,9 @@ module.exports = (sequelize) => {
     description: {
         type: DataTypes.STRING,
     },
+    bred_for: {
+        type: DataTypes.STRING,
+    },
     breed_group: {
         type: DataTypes.STRING,
     },
@@ -31,7 +34,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    temperaments: {
+    temperament: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: false
     },
