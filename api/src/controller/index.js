@@ -12,11 +12,14 @@ const getApiDogs = async () => {
     const dogs = await allDogs?.map((e) => {
       return {
         name: e.name,
-        weight: e.weight?.metric,
-        height: e.height?.metric,
+        weight_min: e.weight?.metric.split("-")[0],
+        weight_max: e.weight?.metric.split("-")[1],
+        height_min: e.height?.metric.split("-")[0],
+        height_max: e.height?.metric.split("-")[1],
         bred_for: e.bred_for ? e.bred_for : "Unknown",
         breed_group: e.breed_group ? e.breed_group : "Unknown",
-        life_span: e.life_span,
+        life_span_min: e.life_span.split("-").map(e => e.trim() && e.trim().slice(0, 2))[0],
+        life_span_max: e.life_span.split("-").map(e => e.trim() && e.trim().slice(0, 2))[1],
         temperament: e.temperament ? e.temperament.split(",") : ["Unknown"],
         image: e.image?.url,
       };
@@ -27,16 +30,20 @@ const getApiDogs = async () => {
           name: d.name,
         },
         defaults: {
-          weight: d.weight,
-          height: d.height,
+          weight_min: d.weight_min !== undefined ? d.weight_min.trim() : d.weight_max.trim(),
+          weight_max: d.weight_max !== undefined ? d.weight_max.trim() : d.weight_min.trim(),
+          height_min: d.height_min !== undefined ? d.height_min.trim() : d.height_max.trim(),
+          height_max: d.height_max !== undefined ? d.height_max.trim() : d.height_min.trim(),
           bred_for: d.bred_for,
           breed_group: d.breed_group,
-          life_span: d.life_span,
+          life_span_min: d.life_span_min ? d.life_span_min.trim() : d.life_span_max.trim(),
+          life_span_max: d.life_span_max ? d.life_span_max.trim() : d.life_span_min.trim(),
           temperament: d.temperament.map((e) => e),
           image: d.image,
         },
       });
     });
+    // console.log(dogs);
     return dogs;
   } catch (e) {
     return console.log(e);
