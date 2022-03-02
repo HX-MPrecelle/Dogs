@@ -1,5 +1,6 @@
 const express = require("express");
 const { getDogs } = require("../controller");
+const { Dog } = require("../db");
 
 const router = express.Router();
 
@@ -19,7 +20,26 @@ router.get("/", async (req, res) => {
     }
   } catch (e) {
     console.log(e);
-    return res.status(500).json({ message: "Ocurrió algo inesperado" });
+    return res.status(500).json({ message: "Something unexpected happened" });
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (id) {
+      const dog = await Dog.findOne({
+        where: {
+          id,
+        },
+      });
+      return res.status(200).send(dog);
+    } else {
+      return res.status(401).json({ message: "Dog id needed" });
+    }
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({ message: "Something unexpected happened" });
   }
 });
 

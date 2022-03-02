@@ -63,6 +63,7 @@ const getApiTemperaments = async () => {
         },
       });
     });
+    // console.log(temperaments);
     return temperaments;
   } catch (e) {
     return console.log(e);
@@ -71,9 +72,27 @@ const getApiTemperaments = async () => {
 
 const getDogs = async () => {
   try {
-    const dogs = await Dog.findAll();
+    const allDogs = await Dog.findAll();
+    const dogs = [];
+    for (const d of allDogs) {
+      dogs.push(d.dataValues)
+    }
     // console.log(dogs);
     return dogs;
+  } catch (e) {
+    return console.log(e);
+  }
+};
+
+const getTemperaments = async () => {
+  try {
+    const allTemperaments = await Temperament.findAll();
+    const temperaments = [];
+    for (const t of allTemperaments) {
+      temperaments.push(t.dataValues)
+    }
+    // console.log(temperaments);
+    return temperaments;
   } catch (e) {
     return console.log(e);
   }
@@ -83,4 +102,5 @@ module.exports = {
   getApiDogs,
   getApiTemperaments,
   getDogs,
+  getTemperaments
 };
