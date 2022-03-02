@@ -15,16 +15,21 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      weight: {
+      weight_min: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      height: {
+      weight_max: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      description: {
+      height_min: {
         type: DataTypes.STRING,
+        allowNull: false,
+      },
+      height_max: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
       bred_for: {
         type: DataTypes.STRING,
@@ -32,7 +37,11 @@ module.exports = (sequelize) => {
       breed_group: {
         type: DataTypes.STRING,
       },
-      life_span: {
+      life_span_min: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      life_span_max: {
         type: DataTypes.STRING,
         allowNull: false,
       },
