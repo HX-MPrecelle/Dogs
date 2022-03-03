@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_DOGS } from "./utilities";
+import { GET_DOGS, GET_DOG_NAME, GET_DOG_DETAIL, CLEAN_DETAIL } from "./utilities";
 
 export const getDogs = () => {
   return async (dispatch) => {
@@ -14,4 +14,33 @@ export const getDogs = () => {
       console.log(e);
     }
   };
+};
+
+export const getDogByName = (name) => {
+  return async (dispatch) => {
+    const url = `http://localhost:8080/dogs?name=${name}`;
+    const json = await axios.get(url);
+    return dispatch({
+      type: GET_DOG_NAME,
+      payload: json.data,
+    });
+  };
+};
+
+export const getDogById = (id) => {
+  return async (dispatch) => {
+    const url = `http://localhost:8080/dogs/${id}`;
+    const json = await axios.get(url);
+    return dispatch({
+      type: GET_DOG_DETAIL,
+      payload: json.data,
+    });
+  };
+};
+
+export const cleanDogDetail = (dispatch) => {
+  return dispatch({
+    type: CLEAN_DETAIL,
+    payload: [],
+  });
 };
