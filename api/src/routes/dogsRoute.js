@@ -1,6 +1,7 @@
+const { response } = require("express");
 const express = require("express");
 const { getDogs } = require("../controller");
-const { Dog } = require("../db");
+const { Dog, Temperament } = require("../db");
 
 const router = express.Router();
 
@@ -57,11 +58,14 @@ router.post("/", async (req, res) => {
       breed_group,
       life_span_min,
       life_span_max,
-      temperaments,
+      temperament,
       image,
     } = req.body;
 
-    const exists = await Dog.findOne({ where: name });
+    const exists = await Dog.findOne({ where: { name } });
+
+    const allTemperaments = await Temperament.findAll();
+    const allTemperamentsFilter = allTemperaments.map((e) => e.dataValues.name);
 
     if (
       name &&
@@ -73,24 +77,43 @@ router.post("/", async (req, res) => {
       breed_group &&
       life_span_min &&
       life_span_max &&
-      temperaments &&
+      temperament &&
       image
     ) {
       if (!exists) {
-        const dog = await Dog.create({
-          name,
-          weight_min,
-          weight_max,
-          height_min,
-          height_max,
-          bred_for,
-          breed_group,
-          life_span_min,
-          life_span_max,
-          temperaments,
-          image,
-        });
-        return res.status(200).send(dog);
+        if (temperament.length <= 7) {
+          const copyTemperament = [];
+          for (const t of temperament) {
+            const parcial = allTemperamentsFilter.find((e) => e === t);
+            if (parcial) {
+              copyTemperament.push(parcial);
+            }
+          }
+          if (temperament.length === copyTemperament.length) {
+            const dog = await Dog.create({
+              name,
+              weight_min,
+              weight_max,
+              height_min,
+              height_max,
+              bred_for,
+              breed_group,
+              life_span_min,
+              life_span_max,
+              temperament,
+              image,
+            });
+            return res.status(201).send(dog);
+          } else {
+            return res
+              .status(401)
+              .json({ message: "Temperament is not valid" });
+          }
+        } else {
+          return res
+            .status(401)
+            .json({ message: "Maximun of seven temperaments" });
+        }
       } else {
         return res.status(401).json({ message: "Dog name already exist" });
       }
