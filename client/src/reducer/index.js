@@ -1,4 +1,9 @@
-import { GET_DOGS, GET_DOG_NAME, GET_DOG_DETAIL, CLEAN_DETAIL } from "../actions/utilities";
+import {
+  GET_DOGS,
+  GET_DOG_NAME,
+  GET_DOG_DETAIL,
+  CLEAN_DETAIL,
+} from "../actions/utilities";
 
 const initialState = {
   dogs: [],

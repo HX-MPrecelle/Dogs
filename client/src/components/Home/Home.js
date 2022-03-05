@@ -7,6 +7,8 @@ import Card from "../Card/Card";
 
 const Home = () => {
   const dogs = useSelector((state) => state.dogs);
+  const temperaments = useSelector((state) => state.temperaments);
+  console.log(temperaments);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [dogsPerPage, setDogsPerPage] = useState(12);

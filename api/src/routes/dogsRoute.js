@@ -1,22 +1,22 @@
-const { response } = require("express");
+const e = require("express");
 const express = require("express");
 const { getDogs } = require("../controller");
 const { Dog, Temperament } = require("../db");
 
 const router = express.Router();
 
+//Obtengo todas las razas de mi base de datos, o si me llega el nombre por query, traigo las que incluyan ese nombre
 router.get("/", async (req, res) => {
   try {
-    const allDogs = await getDogs();
     const { name } = req.query;
-
+    const allDogs = await getDogs();
     if (name) {
-      const dogs = allDogs.filter((e) =>
-        e.name.toLowercase().includes(name.toLowercase())
+      let dogs = allDogs.filter((e) =>
+        e.name.toLowerCase().includes(name.toLowerCase())
       );
       dogs.length
         ? res.status(200).send(dogs)
-        : res.status(400).json({ message: "Dog not found" });
+        : res.status(400).json({ message: "Breed not found" });
     } else {
       res.status(200).send(allDogs);
     }
@@ -26,6 +26,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+//Obtengo una raza específica por ID de mi base de datos
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -46,6 +47,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+//Creo una nueva raza
 router.post("/", async (req, res) => {
   try {
     const {
