@@ -1,5 +1,20 @@
 import axios from "axios";
-import { GET_DOGS, GET_DOG_NAME, GET_DOG_DETAIL, CLEAN_DETAIL } from "./utilities";
+import {
+  GET_DOGS,
+  GET_DOG_NAME,
+  GET_DOG_DETAIL,
+  CLEAN_DETAIL,
+} from "./utilities";
+
+export const getTemperaments = () => {
+  return async (dispatch) => {
+    try {
+      let url = "http://localhost:8080/dogs";
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
 
 export const getDogs = () => {
   return async (dispatch) => {
@@ -18,23 +33,31 @@ export const getDogs = () => {
 
 export const getDogByName = (name) => {
   return async (dispatch) => {
-    const url = `http://localhost:8080/dogs?name=${name}`;
-    const json = await axios.get(url);
-    return dispatch({
-      type: GET_DOG_NAME,
-      payload: json.data,
-    });
+    try {
+      let url = `http://localhost:8080/dogs?name=${name}`;
+      let json = await axios.get(url);
+      return dispatch({
+        type: GET_DOG_NAME,
+        payload: json.data,
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 };
 
 export const getDogById = (id) => {
   return async (dispatch) => {
-    const url = `http://localhost:8080/dogs/${id}`;
-    const json = await axios.get(url);
-    return dispatch({
-      type: GET_DOG_DETAIL,
-      payload: json.data,
-    });
+    try {
+      let url = `http://localhost:8080/dogs/${id}`;
+      let json = await axios.get(url);
+      return dispatch({
+        type: GET_DOG_DETAIL,
+        payload: json.data,
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 };
 
