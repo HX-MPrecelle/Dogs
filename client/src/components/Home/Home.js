@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getDogs } from "../../actions";
+import { getDogs, getTemperaments } from "../../actions";
 import Pagination from "../Pagination/Pagination";
 import Card from "../Card/Card";
+import Filters from "../Filters/Filters";
 
 const Home = () => {
   const dogs = useSelector((state) => state.dogs);
-  const temperaments = useSelector((state) => state.temperaments);
-  console.log(temperaments);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [dogsPerPage, setDogsPerPage] = useState(12);
@@ -27,13 +26,16 @@ const Home = () => {
     dispatch(getDogs());
   }, [dispatch]);
 
+
+
+
   return (
     <div>
       {dogs.length > 0 ? (
         <div>
           <div>
             <div>
-              <h1>Filters</h1>
+              <Filters setCurrentPage={setCurrentPage} setOrder={setOrder} />
               <button>Botoncito</button>
             </div>
             <div>

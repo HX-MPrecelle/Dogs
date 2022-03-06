@@ -4,12 +4,19 @@ import {
   GET_DOG_NAME,
   GET_DOG_DETAIL,
   CLEAN_DETAIL,
+  GET_TEMPERAMENTS,
+  FILTER_TEMPERAMENT,
 } from "./utilities";
 
 export const getTemperaments = () => {
   return async (dispatch) => {
     try {
-      let url = "http://localhost:8080/dogs";
+      let url = "http://localhost:8080/temperaments";
+      let json = await axios.get(url);
+      return dispatch({
+        type: GET_TEMPERAMENTS,
+        payload: json.data,
+      });
     } catch (e) {
       console.log(e);
     }
@@ -66,4 +73,11 @@ export const cleanDogDetail = (dispatch) => {
     type: CLEAN_DETAIL,
     payload: [],
   });
+};
+
+export const filterTemperament = (temperament) => {
+  return {
+    type: FILTER_TEMPERAMENT,
+    payload: temperament,
+  };
 };
