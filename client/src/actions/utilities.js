@@ -4,3 +4,5 @@ export const GET_DOG_DETAIL = 'GET DOG DETAIL';
 export const CLEAN_DETAIL = 'CLEAN DETAIL';
 export const GET_TEMPERAMENTS = 'GET TEMPERAMENTS';
 export const FILTER_TEMPERAMENT = 'FILTER TEMPERAMENT';
+export const ORDER_DOGS = 'ORDER DOGS';
+export const CLEAN_DOGS = 'CLEAN DOGS';

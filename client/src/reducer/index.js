@@ -7,6 +7,8 @@ import {
   CLEAN_DETAIL,
   GET_TEMPERAMENTS,
   FILTER_TEMPERAMENT,
+  ORDER_DOGS,
+  CLEAN_DOGS,
 } from "../actions/utilities";
 
 const initialState = {
@@ -22,7 +24,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         dogs: action.payload,
-        allDogs: action.payload
+        allDogs: action.payload,
       };
     case GET_DOG_NAME:
       return {
@@ -49,9 +51,7 @@ const rootReducer = (state = initialState, action) => {
       let dogsFiltered =
         action.payload === "all"
           ? copyDogs
-          : copyDogs.filter((e) =>
-              e.temperament.includes(action.payload)
-            );
+          : copyDogs.filter((e) => e.temperament.includes(action.payload));
       if (dogsFiltered.length <= 0) {
         dogsFiltered = copyDogs;
         Swal.fire({
@@ -64,6 +64,38 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         dogs: dogsFiltered,
+      };
+    case ORDER_DOGS:
+      let orderDogs;
+
+      if (action.payload === "all") {
+        orderDogs = state.dogs;
+      } else if (action.payload === "asc") {
+        orderDogs = state.dogs.sort((a, b) => {
+          return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+        });
+      } else if (action.payload === "desc") {
+        orderDogs = state.dogs.sort((a, b) => {
+          return b.name.toLowerCase().localeCompare(a.name.toLowerCase());
+        });
+      } else if (action.payload === "weightMin") {
+        orderDogs = state.dogs.sort((a, b) => parseInt(a.weight_min) - parseInt(b.weight_min));
+      } else if (action.payload === "weightMax") {
+        orderDogs = state.dogs.sort((a, b) => parseInt(b.weight_min) - parseInt(a.weight_min));
+      } else if (action.payload === "heightMin") {
+        orderDogs = state.dogs.sort((a, b) => parseInt(a.height_min) - parseInt(b.height_min));
+      } else if (action.payload === "heightMax") {
+        orderDogs = state.dogs.sort((a, b) => parseInt(b.height_max) - parseInt(a.height_max));
+      }
+
+      return {
+        ...state,
+        dogs: orderDogs,
+      };
+    case CLEAN_DOGS:
+      return {
+        ...state,
+        dogs: action.payload,
       };
     default:
       return { ...state };

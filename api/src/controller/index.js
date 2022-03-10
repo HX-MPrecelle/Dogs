@@ -12,14 +12,18 @@ const getApiDogs = async () => {
     const dogs = await allDogs?.map((e) => {
       return {
         name: e.name,
-        weight_min: e.weight?.metric.split("-")[0],
-        weight_max: e.weight?.metric.split("-")[1],
-        height_min: e.height?.metric.split("-")[0],
-        height_max: e.height?.metric.split("-")[1],
+        weight_min: e.weight ? e.weight.metric.split("-")[0] : "Unknown",
+        weight_max: e.weight ? e.weight.metric.split("-")[1] : "Unknown",
+        height_min: e.height ? e.height.metric.split("-")[0] : "Unknown",
+        height_max: e.height ? e.height.metric.split("-")[1] : "Unknown",
         bred_for: e.bred_for ? e.bred_for : "Unknown",
         breed_group: e.breed_group ? e.breed_group : "Unknown",
-        life_span_min: e.life_span.split("-").map(e => e.trim() && e.trim().slice(0, 2))[0],
-        life_span_max: e.life_span.split("-").map(e => e.trim() && e.trim().slice(0, 2))[1],
+        life_span_min: e.life_span
+          .split("-")
+          .map((e) => e.trim() && e.trim().slice(0, 2))[0],
+        life_span_max: e.life_span
+          .split("-")
+          .map((e) => e.trim() && e.trim().slice(0, 2))[1],
         temperament: e.temperament ? e.temperament.split(",") : ["Unknown"],
         image: e.image?.url,
       };
@@ -30,14 +34,30 @@ const getApiDogs = async () => {
           name: d.name,
         },
         defaults: {
-          weight_min: d.weight_min !== undefined ? d.weight_min.trim() : d.weight_max.trim(),
-          weight_max: d.weight_max !== undefined ? d.weight_max.trim() : d.weight_min.trim(),
-          height_min: d.height_min !== undefined ? d.height_min.trim() : d.height_max.trim(),
-          height_max: d.height_max !== undefined ? d.height_max.trim() : d.height_min.trim(),
+          weight_min:
+            d.weight_min !== undefined
+              ? d.weight_min.trim()
+              : d.weight_max.trim(),
+          weight_max:
+            d.weight_max !== undefined
+              ? d.weight_max.trim()
+              : d.weight_min.trim(),
+          height_min:
+            d.height_min !== undefined
+              ? d.height_min.trim()
+              : d.height_max.trim(),
+          height_max:
+            d.height_max !== undefined
+              ? d.height_max.trim()
+              : d.height_min.trim(),
           bred_for: d.bred_for,
           breed_group: d.breed_group,
-          life_span_min: d.life_span_min ? d.life_span_min.trim() : d.life_span_max.trim(),
-          life_span_max: d.life_span_max ? d.life_span_max.trim() : d.life_span_min.trim(),
+          life_span_min: d.life_span_min
+            ? d.life_span_min.trim()
+            : d.life_span_max.trim(),
+          life_span_max: d.life_span_max
+            ? d.life_span_max.trim()
+            : d.life_span_min.trim(),
           temperament: d.temperament.map((e) => e),
           image: d.image,
         },
@@ -82,7 +102,7 @@ const getDogs = async () => {
     const allDogs = await Dog.findAll();
     const dogs = [];
     for (const d of allDogs) {
-      dogs.push(d.dataValues)
+      dogs.push(d.dataValues);
     }
     // console.log(dogs);
     return dogs;
@@ -96,7 +116,7 @@ const getTemperaments = async () => {
     const allTemperaments = await Temperament.findAll();
     const temperaments = [];
     for (const t of allTemperaments) {
-      temperaments.push(t.dataValues)
+      temperaments.push(t.dataValues);
     }
     // console.log(temperaments);
     return temperaments;
@@ -109,5 +129,5 @@ module.exports = {
   getApiDogs,
   getApiTemperaments,
   getDogs,
-  getTemperaments
+  getTemperaments,
 };
