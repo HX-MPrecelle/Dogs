@@ -6,6 +6,8 @@ import {
   CLEAN_DETAIL,
   GET_TEMPERAMENTS,
   FILTER_TEMPERAMENT,
+  ORDER_DOGS,
+  CLEAN_DOGS,
 } from "./utilities";
 
 export const getTemperaments = () => {
@@ -79,5 +81,19 @@ export const filterTemperament = (temperament) => {
   return {
     type: FILTER_TEMPERAMENT,
     payload: temperament,
+  };
+};
+
+export const orderDogs = (order) => {
+  return {
+    type: ORDER_DOGS,
+    payload: order,
+  };
+};
+
+export const cleanDogs = () => {
+  return {
+    type: CLEAN_DOGS,
+    payload: [],
   };
 };

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getDogs, getTemperaments } from "../../actions";
+import { getDogs } from "../../actions";
 import Pagination from "../Pagination/Pagination";
 import Card from "../Card/Card";
 import Filters from "../Filters/Filters";
@@ -36,7 +36,6 @@ const Home = () => {
           <div>
             <div>
               <Filters setCurrentPage={setCurrentPage} setOrder={setOrder} />
-              <button>Botoncito</button>
             </div>
             <div>
               <div>
