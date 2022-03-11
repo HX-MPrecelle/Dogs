@@ -9,6 +9,7 @@ import {
   FILTER_TEMPERAMENT,
   ORDER_DOGS,
   CLEAN_DOGS,
+  CREATE_DOG,
 } from "../actions/utilities";
 
 const initialState = {
@@ -79,13 +80,21 @@ const rootReducer = (state = initialState, action) => {
           return b.name.toLowerCase().localeCompare(a.name.toLowerCase());
         });
       } else if (action.payload === "weightMin") {
-        orderDogs = state.dogs.sort((a, b) => parseInt(a.weight_min) - parseInt(b.weight_min));
+        orderDogs = state.dogs.sort(
+          (a, b) => parseInt(a.weight_min) - parseInt(b.weight_min)
+        );
       } else if (action.payload === "weightMax") {
-        orderDogs = state.dogs.sort((a, b) => parseInt(b.weight_min) - parseInt(a.weight_min));
+        orderDogs = state.dogs.sort(
+          (a, b) => parseInt(b.weight_min) - parseInt(a.weight_min)
+        );
       } else if (action.payload === "heightMin") {
-        orderDogs = state.dogs.sort((a, b) => parseInt(a.height_min) - parseInt(b.height_min));
+        orderDogs = state.dogs.sort(
+          (a, b) => parseInt(a.height_min) - parseInt(b.height_min)
+        );
       } else if (action.payload === "heightMax") {
-        orderDogs = state.dogs.sort((a, b) => parseInt(b.height_max) - parseInt(a.height_max));
+        orderDogs = state.dogs.sort(
+          (a, b) => parseInt(b.height_max) - parseInt(a.height_max)
+        );
       }
 
       return {
@@ -96,6 +105,10 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         dogs: action.payload,
+      };
+    case CREATE_DOG:
+      return {
+        ...state,
       };
     default:
       return { ...state };
