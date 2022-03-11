@@ -6,3 +6,4 @@ export const GET_TEMPERAMENTS = 'GET TEMPERAMENTS';
 export const FILTER_TEMPERAMENT = 'FILTER TEMPERAMENT';
 export const ORDER_DOGS = 'ORDER DOGS';
 export const CLEAN_DOGS = 'CLEAN DOGS';
+export const CREATE_DOG = 'CREATE DOG';

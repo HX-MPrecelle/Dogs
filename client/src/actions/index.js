@@ -1,4 +1,5 @@
 import axios from "axios";
+import Swal from "sweetalert2";
 import {
   GET_DOGS,
   GET_DOG_NAME,
@@ -8,6 +9,7 @@ import {
   FILTER_TEMPERAMENT,
   ORDER_DOGS,
   CLEAN_DOGS,
+  CREATE_DOG,
 } from "./utilities";
 
 export const getTemperaments = () => {
@@ -95,5 +97,33 @@ export const cleanDogs = () => {
   return {
     type: CLEAN_DOGS,
     payload: [],
+  };
+};
+
+export const createDog = (payload) => {
+  return async (dispatch) => {
+    try {
+      var url = "http://localhost:8080/dogs";
+      var dog = await axios.post(url, payload);
+      console.log(dog);
+      dispatch({
+        type: CREATE_DOG,
+        payload: dog
+      })
+      Swal.fire({
+        title: "Congrats!",
+        text: "A new breed has been successfully created",
+        icon: "success",
+        confirmButtonText: "OK!",
+      });
+    } catch (e) {
+      console.log(e);
+      Swal.fire({
+        title: "Oh, no!",
+        text: "An error has ocurred",
+        icon: "error",
+        confirmButtonText: "OK!",
+      });
+    }
   };
 };
